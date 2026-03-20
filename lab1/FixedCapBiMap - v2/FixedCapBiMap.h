@@ -1,5 +1,6 @@
 #pragma once
 #include <utility>
+#include <exception>
 // DO NOT INCLUDE MAPITERATOR
 
 // DO NOT CHANGE THIS PART
@@ -7,7 +8,6 @@ typedef int TKey;
 typedef int TValue;
 typedef std::pair<TKey, TValue> TElem;
 typedef std::pair<TValue, TValue> ValuePair;
-typedef TElem *Data;
 #define NULL_TVALUE -111111
 #define NULL_TELEM pair<TKey, TValue>(-111111, -111111)
 class FixedCapBiMapIterator;
@@ -23,9 +23,9 @@ class FixedCapBiMap
 	friend class FixedCapBiMapIterator;
 
 private:
-	// TODO - Representation
-	Data *data;
-	int capacity, len;
+	TElem *elements;
+	int capacity;
+	int mapSize;
 
 public:
 	// constructor of the container. Creates a FixedCapBiMap with the given capacity.

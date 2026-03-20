@@ -3,101 +3,115 @@
 
 FixedCapBiMap::FixedCapBiMap(int capacity)
 {
-	// If capacity is less or equal to 0 we throw bad request
 	if (capacity <= 0)
-		throw 400;
+	{
+		throw std::exception();
+	}
 
-	// Data is dynamic
-	this->data = new Data;
+	this->elements = new TElem[capacity];
 	this->capacity = capacity;
-	this->len = 0;
+	this->mapSize = 0;
 }
 
 FixedCapBiMap::~FixedCapBiMap()
 {
-	delete this->data;
+	delete[] this->elements;
 }
 
 bool FixedCapBiMap::add(TKey c, TValue v)
 {
-	// If it's full throw bad request
-	if (isFull())
-		throw 400;
-
-	// Check if the given key has 2 associated values already
-	short key_associated_values = 0;
-	for (int i = 0; i < len; ++i)
+	if (this->mapSize == this->capacity)
 	{
-		if (key_associated_values == 2)
-			return false;
+		throw std::exception();
+	}
 
-		if (this->data[i]->first == c)
+	short hit = 0;
+	for (int i = 0; i < this->mapSize; i++)
+	{
+		if (this->elements[i].first == c)
 		{
-			key_associated_values++;
+			if (hit == 1)
+				return false;
+			hit++;
 		}
 	}
 
-	// Add the new pair to the data
-	// Probably a better way of doing this
-	this->data[len++]->first = c;
-	this->data[len++]->second = v;
+	this->elements[this->mapSize++] = TElem{c, v};
+	return true;
 }
 
 ValuePair FixedCapBiMap::search(TKey c) const
 {
-	// TODO - Implementation
-	return std::pair<TValue, TValue>(NULL_TVALUE, NULL_TVALUE);
+	ValuePair query{NULL_TVALUE, NULL_TVALUE};
+
+	short hit = 0;
+	for (int i = 0; i < this->mapSize; i++)
+	{
+		if (this->elements[i].first == c)
+		{
+			if (hit == 0)
+			{
+				query.first = this->elements[i].second;
+			}
+			else if (hit == 1)
+			{
+				query.second = this->elements[i].second;
+			}
+			hit++;
+		}
+	}
+
+	return query;
 }
 
 bool FixedCapBiMap::remove(TKey c, TValue v)
 {
-	// TODO - Implementation
-	// Find the pair in our data
-	int pair_index = -1;
-	for (int i = 0; i < size(); ++i)
+	TElem elem{c, v};
+
+	int foundIndex = -1;
+
+	for (int i = 0; i < this->mapSize; ++i)
 	{
-		if (this->data[i]->first == c && this->data[i]->second == v)
+		// This should be fine since TElem is "simple"
+		if (this->elements[i] == elem)
 		{
-			pair_index = i;
+			foundIndex = i;
 			break;
 		}
 	}
 
-	if (pair_index == -1)
-	{
-		// We remove the pair now
-		// Shifting the pairs to the left like in a vector?
-		for (int i = pair_index; i < size() - 1; ++i)
-		{
-			this->data[i]->first = this->data[i + 1]->first;
-			this->data[i]->second = this->data[i + 1]->second;
-		}
-		// Update the len
-		this->len--;
-		return true;
-	}
-	else
+	if (foundIndex == -1)
 	{
 		return false;
 	}
+
+	// Order doesn't matter, so move last el to targeted el - 0(1)
+	this->elements[foundIndex] = this->elements[this->mapSize - 1];
+	this->mapSize--;
+
+	// Classic Approach (shift left) - 0(n)
+	// for (int i = foundIndex; i < this->mapSize - 1; i++)
+	// {
+	// 	this->elements[i] = this->elements[i + 1];
+	// }
+	// this->mapSize--;
+
+	return true;
 }
 
 int FixedCapBiMap::size() const
 {
-	// TODO - Implementation
-	return this->len;
+	return this->mapSize;
 }
 
 bool FixedCapBiMap::isEmpty() const
 {
-	// TODO - Implementation
-	return this->len == 0;
+	return this->mapSize == 0;
 }
 
 bool FixedCapBiMap::isFull() const
 {
-	// TODO - Implementation
-	return this->len == this->capacity;
+	return this->mapSize == this->capacity;
 }
 
 FixedCapBiMapIterator FixedCapBiMap::iterator() const

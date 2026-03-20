@@ -18,12 +18,12 @@ void testAll()
 	assert(m.add(10, 10) == true);
 	assert(m.add(-3, -3) == true);
 	assert(m.size() == 7);
-	// std::pair<TValue, TValue> res = m.search(10);
+	std::pair<TValue, TValue> res = m.search(10);
 	std::pair<TValue, TValue> ans1(110, 10);
 	std::pair<TValue, TValue> ans2(10, 110);
 	std::pair<TValue, TValue> ans3(NULL_TVALUE, NULL_TVALUE);
-	// assert(((res == ans1) || (res == ans2)));
-	// assert(m.search(16) == ans3);
+	assert(((res == ans1) || (res == ans2)));
+	assert(m.search(16) == ans3);
 	assert(m.remove(1, 1) == true);
 	assert(m.remove(6, 6) == false);
 	assert(m.remove(5, 7) == false);
