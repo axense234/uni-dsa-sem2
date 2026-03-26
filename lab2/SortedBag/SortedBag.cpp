@@ -8,6 +8,9 @@ SortedBag::SortedBag(Relation r)
 	this->elems = new TComp[maxSize];
 	this->relation = r;
 }
+// BC: Theta(1)
+// WC: Theta(1)
+// TC: Theta(1)
 
 SortedBag::SortedBag(const SortedBag &other)
 {
@@ -21,6 +24,9 @@ SortedBag::SortedBag(const SortedBag &other)
 		this->elems[i] = other.elems[i];
 	}
 }
+// BC: Theta(other.currentSize)
+// WC: Theta(other.currentSize)
+// TC: Theta(other.currentSize)
 
 SortedBag &SortedBag::operator=(const SortedBag &other)
 {
@@ -37,6 +43,9 @@ SortedBag &SortedBag::operator=(const SortedBag &other)
 	}
 	return *this;
 }
+// BC: Theta(other.currentSize)
+// WC: Theta(other.currentSize)
+// TC: Theta(other.currentSize)
 
 void SortedBag::resize()
 {
@@ -52,6 +61,9 @@ void SortedBag::resize()
 	this->elems = newElems;
 	this->maxSize = newCapacity;
 }
+// BC: Theta(currentSize)
+// WC: Theta(currentSize)
+// TC: Theta(currentSize)
 
 void SortedBag::add(TComp e)
 {
@@ -85,6 +97,9 @@ void SortedBag::add(TComp e)
 	this->elems[addIndex] = e;
 	this->currentSize++;
 }
+// BC: Theta(1)
+// WC: Theta(currentSize)
+// TC: O(currentSize)
 
 bool SortedBag::remove(TComp e)
 {
@@ -129,6 +144,9 @@ bool SortedBag::remove(TComp e)
 	this->currentSize--;
 	return true;
 }
+// BC: Theta(1) -> when elem is in the middle and has 1 occurence
+// WC: Theta(log(currentSize) + nbOccurences) = Theta(log(currentSize)) -> binary search
+// TC: O(log(currentSize) + currentSize) = O(currentSize)
 
 bool SortedBag::search(TComp elem) const
 {
@@ -155,6 +173,9 @@ bool SortedBag::search(TComp elem) const
 
 	return false;
 }
+// BC: Theta(1)
+// WC: Theta(log(currentSize))
+// TC: O(log(currentSize))
 
 int SortedBag::nrOccurrences(TComp elem) const
 {
@@ -193,23 +214,38 @@ int SortedBag::nrOccurrences(TComp elem) const
 
 	return count;
 }
+// BC: Theta(log(currentSize)) -> when elem isnt found in the bag
+// WC: Theta(currentSize) -> list contains only duplicates
+// TC: Theta(log(currentSize) + nbOccurences) = O(currentSize)
 
 int SortedBag::size() const
 {
 	return this->currentSize;
 }
+// BC: Theta(1)
+// WC: Theta(1)
+// TC: Theta(1)
 
 bool SortedBag::isEmpty() const
 {
 	return this->currentSize == 0;
 }
+// BC: Theta(1)
+// WC: Theta(1)
+// TC: Theta(1)
 
 SortedBagIterator SortedBag::iterator() const
 {
 	return SortedBagIterator(*this);
 }
+// BC: Theta(1)
+// WC: Theta(1)
+// TC: Theta(1)
 
 SortedBag::~SortedBag()
 {
 	delete[] this->elems;
 }
+// BC: Theta(1)
+// WC: Theta(1)
+// TC: Theta(1)

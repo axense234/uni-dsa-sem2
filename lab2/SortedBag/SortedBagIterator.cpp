@@ -8,6 +8,9 @@ SortedBagIterator::SortedBagIterator(const SortedBag &b) : bag(b)
 {
 	this->currentIndex = 0;
 }
+// BC: Theta(1)
+// WC: Theta(1)
+// TC: Theta(1)
 
 TComp SortedBagIterator::getCurrent()
 {
@@ -17,11 +20,17 @@ TComp SortedBagIterator::getCurrent()
 	}
 	return this->bag.elems[this->currentIndex];
 }
+// BC: Theta(1)
+// WC: Theta(1)
+// TC: Theta(1)
 
 bool SortedBagIterator::valid()
 {
 	return this->currentIndex < this->bag.currentSize;
 }
+// BC: Theta(1)
+// WC: Theta(1)
+// TC: Theta(1)
 
 void SortedBagIterator::next()
 {
@@ -32,8 +41,14 @@ void SortedBagIterator::next()
 
 	this->currentIndex++;
 }
+// BC: Theta(1)
+// WC: Theta(1)
+// TC: Theta(1)
 
 void SortedBagIterator::first()
 {
 	this->currentIndex = 0;
 }
+// BC: Theta(1)
+// WC: Theta(1)
+// TC: Theta(1)
