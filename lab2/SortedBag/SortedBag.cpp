@@ -1,6 +1,11 @@
 #include "SortedBag.h"
 #include "SortedBagIterator.h"
 
+/*
+rel: first < second
+2222244445555666789999
+*/
+
 SortedBag::SortedBag(Relation r)
 {
 	this->maxSize = 10;
@@ -97,9 +102,9 @@ void SortedBag::add(TComp e)
 	this->elems[addIndex] = e;
 	this->currentSize++;
 }
-// BC: Theta(1)
-// WC: Theta(currentSize)
-// TC: O(currentSize)
+// BC: Theta(currentSize) -> first element to be added
+// WC: Theta(currentSize) -> when needing to resize for example
+// TC: Theta(currentSize)
 
 bool SortedBag::remove(TComp e)
 {
@@ -112,13 +117,14 @@ bool SortedBag::remove(TComp e)
 		if (this->elems[middle] == e)
 		{
 			removeIndex = middle;
-
-			while (removeIndex > 0 && this->elems[removeIndex - 1] == e)
-			{
-				removeIndex--;
-			}
-
 			break;
+
+			// while (removeIndex > 0 && this->elems[removeIndex - 1] == e)
+			// {
+			// 	removeIndex--;
+			// }
+
+			// break;
 		}
 
 		if (this->relation(this->elems[middle], e))
@@ -144,8 +150,8 @@ bool SortedBag::remove(TComp e)
 	this->currentSize--;
 	return true;
 }
-// BC: Theta(1) -> when elem is in the middle and has 1 occurence
-// WC: Theta(log(currentSize) + nbOccurences) = Theta(log(currentSize)) -> binary search
+// BC: Theta(log(currentSize)) -> when elem is found at the end so the last for loop doesnt do anything
+// WC: Theta(log(currentSize) + currentSize) = Theta(currentSize) -> all elems are the same
 // TC: O(log(currentSize) + currentSize) = O(currentSize)
 
 bool SortedBag::search(TComp elem) const
@@ -173,8 +179,8 @@ bool SortedBag::search(TComp elem) const
 
 	return false;
 }
-// BC: Theta(1)
-// WC: Theta(log(currentSize))
+// BC: Theta(1) -> elem is found right away
+// WC: Theta(log(currentSize)) -> elem is the last elem searched
 // TC: O(log(currentSize))
 
 int SortedBag::nrOccurrences(TComp elem) const
@@ -215,8 +221,8 @@ int SortedBag::nrOccurrences(TComp elem) const
 	return count;
 }
 // BC: Theta(log(currentSize)) -> when elem isnt found in the bag
-// WC: Theta(currentSize) -> list contains only duplicates
-// TC: Theta(log(currentSize) + nbOccurences) = O(currentSize)
+// WC: Theta(currentSize) -> bag contains only duplicates
+// TC: O(currentSize)
 
 int SortedBag::size() const
 {
