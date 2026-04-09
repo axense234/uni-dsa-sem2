@@ -64,8 +64,8 @@ TValue Map::add(TKey c, TValue v)
 	this->currentSize++;
 	return NULL_TVALUE;
 }
-// BC: Theta(1) -> elem is head
-// WC: Theta(currentSize) -> elem is tail
+// BC: Theta(1) -> elem matched head
+// WC: Theta(currentSize) -> elem matches tail
 // TC: O(currentSize)
 
 TValue Map::search(TKey c) const
@@ -83,8 +83,8 @@ TValue Map::search(TKey c) const
 
 	return NULL_TVALUE;
 }
-// BC: Theta(1) -> elem is head
-// WC: Theta(currentSize) -> elem is tail
+// BC: Theta(1) -> elem matches head
+// WC: Theta(currentSize) -> elem matches tail
 // TC: O(currentSize)
 
 TValue Map::remove(TKey c)
@@ -94,6 +94,7 @@ TValue Map::remove(TKey c)
 	// search for the key
 	while (current != nullptr)
 	{
+		// found elem
 		if (current->key == c)
 		{
 			TValue oldValue = current->value;
@@ -105,7 +106,7 @@ TValue Map::remove(TKey c)
 			}
 			else
 			{
-				// removing head
+				// elem matched head, so we update our head
 				this->head = current->next;
 			}
 
@@ -115,7 +116,7 @@ TValue Map::remove(TKey c)
 			}
 			else
 			{
-				// removing tail
+				// elem matched tail, so we update the tail
 				this->tail = current->prev;
 			}
 
