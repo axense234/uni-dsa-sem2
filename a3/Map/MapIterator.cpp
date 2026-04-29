@@ -24,12 +24,9 @@ void MapIterator::next()
 	if (this->valid())
 	{
 		this->current = this->current->next;
+		return;
 	}
-	else
-	{
-		// if iterator is not valid, next() should throw an exception
-		throw exception();
-	}
+	throw exception();
 }
 // BC: Theta(1)
 // WC: Theta(1)
@@ -39,12 +36,9 @@ TElem MapIterator::getCurrent()
 {
 	if (this->valid())
 	{
-		return std::make_pair(this->current->key, this->current->value);
+		return pair(this->current->key, this->current->value);
 	}
-	else
-	{
-		throw exception();
-	}
+	throw exception();
 }
 // BC: Theta(1)
 // WC: Theta(1)
