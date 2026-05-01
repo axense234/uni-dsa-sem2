@@ -35,7 +35,7 @@ bool Set::add(TElem elem)
 	// check is there is space using firstEmpty
 	if (firstEmpty == -1)
 	{
-		return false; // Set is full
+		return false;
 	}
 
 	// handle firstEmpty
