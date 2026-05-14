@@ -49,7 +49,7 @@ void MultiMap::resize()
 
 void MultiMap::add(TKey c, TValue v)
 {
-	if ((double)this->numberOfKeys / this->m > this->loadFactorThreshold)
+	if ((float)this->numberOfKeys / this->m > this->loadFactorThreshold)
 	{
 		resize();
 	}
@@ -91,8 +91,8 @@ void MultiMap::add(TKey c, TValue v)
 	totalPairs++;
 }
 // BC: Theta(1)
-// WC: Theta(n) resize
-// TC: O(n)
+// WC: Theta(totalPairs) resize
+// TC: O(totalPairs)
 
 bool MultiMap::remove(TKey c, TValue v)
 {
@@ -140,8 +140,8 @@ bool MultiMap::remove(TKey c, TValue v)
 	return false;
 }
 // BC: Theta(1) -> found at start
-// WC: Theta(n) -> vlaue not found
-// TC: O(n)
+// WC: Theta(totalPairs) -> vlaue not found
+// TC: O(totalPairs)
 
 vector<TValue> MultiMap::search(TKey c) const
 {

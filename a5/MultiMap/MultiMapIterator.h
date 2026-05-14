@@ -8,13 +8,13 @@ class MultiMapIterator
 	friend class MultiMap;
 
 private:
-	const MultiMap &col;
+	const MultiMap &multi;
 	int currentBucket;
 	int currentPositionInValues;
 	KeyNode *currentNode;
 
 	// DO NOT CHANGE THIS PART
-	MultiMapIterator(const MultiMap &c);
+	MultiMapIterator(const MultiMap &multi);
 
 public:
 	TElem getCurrent() const;

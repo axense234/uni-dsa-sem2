@@ -31,11 +31,12 @@ private:
 	int m;
 	int numberOfKeys;
 	int totalPairs;
-	double loadFactorThreshold;
+	float loadFactorThreshold;
 
 	TKey hash(TKey c) const
 	{
-		return ((c % m) + m) % m;
+		// return ((c % m) + m) % m;
+		return c % m >= 0 ? c % m : c % m + m;
 	}
 
 	void resize();

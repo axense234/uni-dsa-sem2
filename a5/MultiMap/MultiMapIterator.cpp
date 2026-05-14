@@ -3,18 +3,18 @@
 
 #include <exception>
 
-MultiMapIterator::MultiMapIterator(const MultiMap &c) : col(c)
+MultiMapIterator::MultiMapIterator(const MultiMap &c) : multi(c)
 {
 	this->currentBucket = 0;
 	this->currentPositionInValues = 0;
 	this->currentNode = nullptr;
 
-	for (int i = 0; i < col.m; i++)
+	for (int i = 0; i < multi.m; i++)
 	{
-		if (this->col.table[i] != nullptr)
+		if (this->multi.table[i] != nullptr)
 		{
 			this->currentBucket = i;
-			this->currentNode = this->col.table[i];
+			this->currentNode = this->multi.table[i];
 			this->currentPositionInValues = 0;
 			return;
 		}
@@ -61,12 +61,12 @@ void MultiMapIterator::next()
 		while (this->currentNode == nullptr)
 		{
 			this->currentBucket++;
-			if (this->currentBucket >= col.m)
+			if (this->currentBucket >= multi.m)
 			{
 				this->currentNode = nullptr;
 				return;
 			}
-			this->currentNode = this->col.table[currentBucket];
+			this->currentNode = this->multi.table[currentBucket];
 		}
 	}
 }
@@ -80,12 +80,12 @@ void MultiMapIterator::first()
 	this->currentPositionInValues = 0;
 	this->currentNode = nullptr;
 
-	for (int i = 0; i < col.m; i++)
+	for (int i = 0; i < multi.m; i++)
 	{
-		if (this->col.table[i] != nullptr)
+		if (this->multi.table[i] != nullptr)
 		{
 			this->currentBucket = i;
-			this->currentNode = this->col.table[i];
+			this->currentNode = this->multi.table[i];
 			this->currentPositionInValues = 0;
 			return;
 		}
